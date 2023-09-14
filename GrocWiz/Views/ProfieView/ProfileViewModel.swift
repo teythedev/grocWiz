@@ -8,5 +8,5 @@
 import Foundation
 
 final class ProfileViewModel {
-    
+    weak var delegate: ProfileViewModelDelegate?
 }

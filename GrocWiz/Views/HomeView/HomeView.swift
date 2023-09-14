@@ -8,52 +8,38 @@
 import UIKit
 import FirebaseAuth
 
-class HomeView: UIViewController {
+class HomeView: UITabBarController, UITabBarControllerDelegate {
     
-    lazy var googleSingOutButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Sign out", for: .normal)
-        button.addTarget(self, action: #selector(signOutGoogle), for: .touchUpInside)
-        return button
-    }()
     
-    lazy var loadingIndicator: LoadingView = {
-        let loadingView = LoadingView()
-        
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        return loadingView
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
-
-        view.addSubview(googleSingOutButton)
-        view.addSubview(loadingIndicator)
+        delegate = self
+        tabBar.backgroundColor = .tertiarySystemBackground
+        tabBar.tintColor = .label
+        configure()
+    }
     
-        NSLayoutConstraint.activate([
-            googleSingOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            googleSingOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-            
-            
-        ])
+
+    
+    private func configure() {
+        let cellarsTab = FridgesViewBuilder.make()
+        let cellarsTabItem = UITabBarItem(title: "Fridges".localized(), image: UIImage(systemName: "refrigerator")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "refrigerator.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
+        cellarsTab.tabBarItem = cellarsTabItem
         
-
+        let listsTab = ListsViewBuilder.make()
+        let listsTabItem = UITabBarItem(title: "Lists".localized(), image: UIImage(systemName: "list.clipboard")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "list.clipboard.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
+        listsTab.tabBarItem = listsTabItem
+        
+        let messagesTab = MessagesViewBuilder.make()
+        let messagesTabItem = UITabBarItem(title: "Messages".localized(), image: UIImage(systemName: "envelope")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "envelope.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
+        messagesTab.tabBarItem = messagesTabItem
+        
+        let profileTab = ProfileViewBuilder.make()
+        let profileTabItem = UITabBarItem(title: "Profile".localized(), image: UIImage(systemName: "person")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "person.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
+        profileTab.tabBarItem = profileTabItem
+        setViewControllers([cellarsTab,listsTab,messagesTab,profileTab], animated: false)
     }
     
-
     
-    @objc func signOutGoogle() {
-        do {
-            try Auth.auth().signOut()
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(AuthViewBuilder.make())
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
-    }
-
 
 }

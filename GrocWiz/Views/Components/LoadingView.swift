@@ -12,8 +12,7 @@ class LoadingView: UIView {
     lazy var indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
-    
-        indicator.color = .white
+        indicator.color = .label
         indicator.startAnimating()
         return indicator
     }()

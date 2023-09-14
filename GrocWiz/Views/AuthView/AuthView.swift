@@ -16,7 +16,7 @@ class AuthView: UIViewController {
     lazy var googleSignInButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Continue with Google", for: .normal)
+        button.setTitle("Continue with Google".localized(), for: .normal)
         button.setImage(UIImage(named: "Google"), for: .normal)
         var config = UIButton.Configuration.bordered()
         config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)

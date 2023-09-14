@@ -9,94 +9,127 @@ import UIKit
 
 class ProfileView: UIViewController {
     
-    lazy var headerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .orange
-        return view
-    }()
-    
-    lazy var footerView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.layer.cornerRadius = 20
-        tableView.separatorStyle = .none
-        tableView.bounces = false
-        tableView.backgroundColor = UIColor.white.withAlphaComponent(0)
+    private enum ListTilesEnum: String, CaseIterable {
+        case getPro = "Get GrocWiz Pro"
+        case language = "Language"
+        case rateUs = "Rate us on the App Store"
+        case feedback = "Feedback"
+        case privacyPolicy = "Privacy Policy"
+        case termsOfUse = "Terms of Use"
         
-        tableView.register(ImageLeadingTableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
-        return tableView
-    }()
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .orange
-        configure()
+        var icon: String {
+            switch self {
+            case .getPro:
+                return "crown"
+            case .language:
+                return "globe.asia.australia"
+            case .rateUs:
+                return "star"
+            case .feedback:
+                return "pencil.line"
+            case .privacyPolicy:
+                return "lock"
+            case .termsOfUse:
+                return "book"
+            }
+        }
     }
     
+    lazy var headerView: ProfileHeaderView = {
+        let profileHeaderView = ProfileHeaderView()
+        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        return profileHeaderView
+    }()
     
+    lazy var listView: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.register(ImageLeadingTableViewCell.self, forCellReuseIdentifier: "ImageLeadingCell")
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.dataSource = self
+        table.delegate = self
+        table.separatorStyle = .none
+        table.backgroundColor = UIColor.makeTransParent()
+        table.selectionFollowsFocus = false
+        return table
+    }()
+    
+    lazy var signOutButton: UIBarButtonItem = {
+        let button = UIBarButtonItem()
+        button.title = "Logout".localized()
+        button.tintColor = .label
+        button.target = self
+        return button
+    }()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = signOutButton
+        title = "Profile".localized()
+        configure()
+    }
+
     private func configure() {
-        
         view.addSubview(headerView)
-        view.addSubview(footerView)
-        
+        view.addSubview(listView)
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
-            footerView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            footerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            listView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            listView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            listView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            listView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
         ])
-        
-        
     }
 }
 
-extension ProfileView: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        6
-        
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! ImageLeadingTableViewCell 
-            //        var content = cell.defaultContentConfiguration()
-            //        content.text = "Merhana"
-            cell.imageLeading.image = UIImage(systemName: "cart.badge.plus")
-            cell.titleText.text = "dsadas"
-            cell.accessoryType = .disclosureIndicator
-            cell.backgroundColor = .systemTeal
-            return cell
-       
-//        if let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as? ImageLeadingTableViewCell {
-//            //        var content = cell.defaultContentConfiguration()
-//            //        content.text = "Merhana"
-//            cell.imageLeading.image = UIImage(systemName: "cart.badge.plus")
-//            cell.titleText.text = "dsadas"
-//            cell.accessoryType = .disclosureIndicator
-//            cell.backgroundColor = .systemTeal
-//            return cell
-//        } else {
-//            return UITableViewCell()
-//        }
-        
-        
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-    }
-    
-    
-    
+extension ProfileView: UITableViewDelegate {
     
 }
+
+extension ProfileView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        ListTilesEnum.allCases.count + 1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row < ListTilesEnum.allCases.count  {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            var configuration = cell.defaultContentConfiguration()
+            configuration.image = UIImage(systemName: ListTilesEnum.allCases[indexPath.row].icon)
+            configuration.imageProperties.tintColor = .label
+            configuration.text = ListTilesEnum.allCases[indexPath.row].rawValue.localized()
+            cell.selectionStyle = .none
+            cell.backgroundColor = .makeTransParent()
+            cell.contentConfiguration = configuration
+            cell.accessoryType = .disclosureIndicator
+ 
+            return cell
+        }else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            var configuration = cell.defaultContentConfiguration()
+            configuration.text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+            configuration.textProperties.alignment = .center
+            cell.backgroundColor = .makeTransParent()
+            cell.contentConfiguration = configuration
+            cell.selectionStyle = .none
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+
+}
+
+
+//    @objc func signOutGoogle() {
+//        do {
+//            try Auth.auth().signOut()
+//            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(AuthViewBuilder.make())
+//        } catch let signOutError as NSError {
+//            print("Error signing out: %@", signOutError)
+//        }
+//    }
