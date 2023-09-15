@@ -203,7 +203,7 @@ extension FridgesView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let x = fridges[section].items.count
         if x > 3 {
-            return 4
+            return 3
         }else {
             return x + 1
         }
