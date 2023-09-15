@@ -127,7 +127,9 @@ class FridgesView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(ItemCollectionViewCell.self, forCellWithReuseIdentifier: ItemCollectionViewCell.identifier)
+        collectionView.register(ItemCollectionMoreViewCell.self, forCellWithReuseIdentifier: ItemCollectionMoreViewCell.identifier)
         collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        
         collectionView.collectionViewLayout = createLayout()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -169,7 +171,6 @@ class FridgesView: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
         section.decorationItems = [background]
-       // section.contentInsets = NSDirectionalEdgeInsets(top:0, leading: 8, bottom: 4, trailing: 8)
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 16
@@ -202,8 +203,8 @@ extension FridgesView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let x = fridges[section].items.count
-        if x > 3 {
-            return 8
+        if x >= 3 {
+            return 4
         }else {
             return x + 1
         }
@@ -215,7 +216,24 @@ extension FridgesView: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ItemCollectionViewCell.identifier,
             for: indexPath) as? ItemCollectionViewCell
-        if indexPath.row < fridges[indexPath.section].items.count && indexPath.row < 3 {
+        
+        if fridges[indexPath.section].items.count >= 3 && indexPath.row == 3 {
+            cell!.nameLabel.text = "more"
+            cell!.decreaseButton.isHidden = true
+            cell!.increaseButton.isHidden = true
+            cell!.amountLabel.text = "..."
+            cell!.addGestureRecognizer(UITAp)
+        } else if  fridges[indexPath.section].items.count == 2 && indexPath.row == 2 {
+            cell!.nameLabel.text = "more"
+            cell!.decreaseButton.isHidden = true
+            cell!.increaseButton.isHidden = true
+            cell!.amountLabel.text = "..."
+        } else if  fridges[indexPath.section].items.count == 1 && indexPath.row == 1 {
+            cell!.nameLabel.text = "more"
+            cell!.decreaseButton.isHidden = true
+            cell!.increaseButton.isHidden = true
+            cell!.amountLabel.text = "..."
+        } else {
             cell?.nameLabel.text = fridges[indexPath.section].items[indexPath.row].name
             cell?.amountLabel.text = "\(fridges[indexPath.section].items[indexPath.row].amount)"
             cell?.decreaseButtonTapCallback = { [weak self]  in
@@ -226,9 +244,9 @@ extension FridgesView: UICollectionViewDelegate, UICollectionViewDataSource {
                 self!.fridges[indexPath.section].items[indexPath.row].amount += 1
                 collectionView.reloadData()
             }
-            return cell!
         }
-        cell!.nameLabel.text = "more"
+        
+       
         return cell!
         
     }
