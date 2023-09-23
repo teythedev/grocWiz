@@ -1,8 +1,8 @@
 "Continue with Google" = "Google ile devam edin.";
 "Unkown User" = "Bilinmeyen Kullanici";
 "Unknown" = "Bilinmiyor";
-"Cellar"= "Kiler";
-"Cellars"= "Kilerler";
+"Stock"= "Stok";
+"Stocks"= "Stoklar";
 "Lists" = "Listeler";
 "Get GrocWiz Pro" = "GrocWiz Pro'ya geç";
 "Language" = "Dil";
@@ -12,5 +12,12 @@
 "Terms of Use" = "Kullanım Koşulları";
 "Logout" = "Çıkış Yap";
 "Profile" = "Profilim";
-"Messages" = "Mesajlar"; 
+"Messages" = "Mesajlar";
+"More" = "Daha fazla";
+"Please enter a product or stock name" = "Ürün ve ya stok ismi giriniz.";
+"Please enter a stock name" = "Stok ismi giriniz";
+"Add new stock" = "Yeni stok ekle";
+"'s list" = "'in listesi";
+"Save" = "Kaydet";
+"Cancel" = "İptal";
 

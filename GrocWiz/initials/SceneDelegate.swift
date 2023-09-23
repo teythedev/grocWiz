@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if Auth.auth().currentUser == nil {
             window.rootViewController = AuthViewBuilder.make()
         } else {
-            window.rootViewController = HomeView()
+            window.rootViewController = HomeViewBuilder.make()
         }
         window.makeKeyAndVisible()
         self.window = window

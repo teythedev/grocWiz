@@ -63,14 +63,13 @@ class ItemCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubViews(views: nameLabel,stackView)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.layer.borderColor = UIColor.label.cgColor
-        contentView.layer.borderWidth = 0.5
+        contentView.addSubViews(views: nameLabel,stackView)
         contentView.roundCornerBy(20)
+        contentView.backgroundColor = .tertiarySystemBackground
         stackView.addArrangedSubview(decreaseButton)
         stackView.addArrangedSubview(amountLabel)
         stackView.addArrangedSubview(increaseButton)
@@ -96,45 +95,4 @@ class ItemCollectionViewCell: UICollectionViewCell {
         increaseButtonTapCallback = {}
         decreaseButtonTapCallback = {}
     }
-}
-
-
-class ItemCollectionMoreViewCell: UICollectionViewCell {
-    var moreTappedCallback: () -> () = {}
-    
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    
-    static let identifier: String = "ItemCollectionMoreViewCell"
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.layer.borderColor = UIColor.label.cgColor
-        contentView.layer.borderWidth = 0.5
-        contentView.roundCornerBy(20)
-        contentView.addSubview(nameLabel)
-        NSLayoutConstraint.activate([
-            
-            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
-            
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("Unsupported")
-    }
-    
 }

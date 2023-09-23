@@ -22,9 +22,9 @@ class HomeView: UITabBarController, UITabBarControllerDelegate {
 
     
     private func configure() {
-        let cellarsTab = FridgesViewBuilder.make()
-        let cellarsTabItem = UITabBarItem(title: "Fridges".localized(), image: UIImage(systemName: "refrigerator")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "refrigerator.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
-        cellarsTab.tabBarItem = cellarsTabItem
+        let stocksTab = StocksViewBuilder.make()
+        let stocksTabItem = UITabBarItem(title: "Stocks".localized(), image: UIImage(systemName: "rectangle.stack")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "rectangle.stack.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
+        stocksTab.tabBarItem = stocksTabItem
         
         let listsTab = ListsViewBuilder.make()
         let listsTabItem = UITabBarItem(title: "Lists".localized(), image: UIImage(systemName: "list.clipboard")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "list.clipboard.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
@@ -37,7 +37,7 @@ class HomeView: UITabBarController, UITabBarControllerDelegate {
         let profileTab = ProfileViewBuilder.make()
         let profileTabItem = UITabBarItem(title: "Profile".localized(), image: UIImage(systemName: "person")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "person.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
         profileTab.tabBarItem = profileTabItem
-        setViewControllers([cellarsTab,listsTab,messagesTab,profileTab], animated: false)
+        setViewControllers([stocksTab,listsTab,messagesTab,profileTab], animated: false)
     }
     
     

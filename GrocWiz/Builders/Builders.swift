@@ -18,29 +18,17 @@ struct AuthViewBuilder {
 }
 
 struct HomeViewBuilder {
-    static func make() -> UITabBarController {
-        let homeView = UITabBarController()
-        let fridges = FridgesViewBuilder.make()
-        let cellarsTabItem = UITabBarItem(title: "Fridges".localized(), image: UIImage(systemName: "refrigerator")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "refrigerator.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
-        fridges.tabBarItem = cellarsTabItem
-        let lists = ListsViewBuilder.make()
-        let listsTabItem = UITabBarItem(title: "Lists".localized(), image: UIImage(systemName: "list.clipboard")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "list.clipboard.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
-        lists.tabBarItem = listsTabItem
-        let messages = MessagesViewBuilder.make()
-        let messagesTabItem = UITabBarItem(title: "Messages".localized(), image: UIImage(systemName: "envelope")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "envelope.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
-        messages.tabBarItem = messagesTabItem
-        let profile = ProfileViewBuilder.make()
-        let profileTabItem = UITabBarItem(title: "Profile".localized(), image: UIImage(systemName: "person")?.withTintColor(.label, renderingMode: .alwaysOriginal), selectedImage: UIImage(systemName: "person.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal))
-        profile.tabBarItem = profileTabItem
-        homeView.tabBarController?.setViewControllers([fridges,lists,messages,profile], animated: false)
+    static func make() -> HomeView {
+        let homeView = HomeView()
         return homeView
     }
 }
 
-struct FridgesViewBuilder {
+struct StocksViewBuilder {
     static func make() -> UINavigationController {
-        let fridgesView = FridgesView()
-        let navigationController = UINavigationController(rootViewController: fridgesView)
+        let stocksView = StocksView()
+        stocksView.stocksViewModel = StocksViewModel()
+        let navigationController = UINavigationController(rootViewController: stocksView)
         return navigationController
     }
 }

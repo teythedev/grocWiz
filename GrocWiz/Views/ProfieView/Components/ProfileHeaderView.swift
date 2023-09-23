@@ -31,14 +31,14 @@ class ProfileHeaderView: UIView {
         return label
     }()
     
-    lazy var activeCellarInfoCard: InfoNumericCardView = {
+    lazy var activeStocksInfoCard: InfoNumericCardView = {
         let infoNumericCard = InfoNumericCardView()
-        infoNumericCard.infoCardIcon.image = UIImage(systemName: "refrigerator.fill")
-        infoNumericCard.infoDescription.text = "Fridge".localized()
+        infoNumericCard.infoCardIcon.image = UIImage(systemName: "rectangle.stack.fill")
+        infoNumericCard.infoDescription.text = "Stocks".localized()
         return infoNumericCard
     }()
      
-    lazy var activeListInfoCard: InfoNumericCardView = {
+    lazy var activeListsInfoCard: InfoNumericCardView = {
         let infoNumericCard = InfoNumericCardView()
         infoNumericCard.infoCardIcon.image = UIImage(systemName: "list.clipboard.fill")
         infoNumericCard.infoDescription.text = "Lists".localized()
@@ -46,7 +46,7 @@ class ProfileHeaderView: UIView {
     }()
     
     lazy var infoCardsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [activeCellarInfoCard,activeListInfoCard])
+        let stackView = UIStackView(arrangedSubviews: [activeStocksInfoCard,activeListsInfoCard])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 16
